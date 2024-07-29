@@ -31,13 +31,20 @@ public class CategoryResources {
     }
 
     @PostMapping
-    public ResponseEntity<Category> insert(@RequestBody CategoryDTO dto){
+    public ResponseEntity<CategoryDTO> insert(@RequestBody CategoryDTO dto){
         dto = categoryService.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(dto.getId())
                 .toUri();
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryDTO> update (@PathVariable Long id, @RequestBody CategoryDTO dto){
+        dto = categoryService.update(id,dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("id").buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
     }
 
 

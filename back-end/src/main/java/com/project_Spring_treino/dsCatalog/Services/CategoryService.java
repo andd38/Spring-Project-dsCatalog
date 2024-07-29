@@ -4,6 +4,7 @@ import com.project_Spring_treino.dsCatalog.Entities.Category;
 import com.project_Spring_treino.dsCatalog.Repositories.CategoryRepository;
 import com.project_Spring_treino.dsCatalog.Services.exception.ExceptionIdNotFound;
 import com.project_Spring_treino.dsCatalog.dto.CategoryDTO;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,5 +43,18 @@ public class CategoryService {
         entity.setName(dto.getName());
         entity = categoryRepository.save(entity);
         return new CategoryDTO(entity);
+    }
+
+    @Transactional
+    public CategoryDTO update(Long id,CategoryDTO dto) {
+        try{
+            Category entity =categoryRepository.getReferenceById(id);
+            entity.setName(dto.getName());
+            entity = categoryRepository.save(entity);
+            return new CategoryDTO(entity);
+        }catch (EntityNotFoundException e){
+            throw new ExceptionIdNotFound("id not found"+id);
+        }
+
     }
 }
