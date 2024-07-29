@@ -2,14 +2,16 @@ package com.project_Spring_treino.dsCatalog.Services;
 
 import com.project_Spring_treino.dsCatalog.Entities.Category;
 import com.project_Spring_treino.dsCatalog.Repositories.CategoryRepository;
+import com.project_Spring_treino.dsCatalog.Resources.exceptions.DatabaseException;
 import com.project_Spring_treino.dsCatalog.Services.exception.ExceptionIdNotFound;
 import com.project_Spring_treino.dsCatalog.dto.CategoryDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,4 +59,18 @@ public class CategoryService {
         }
 
     }
+
+    @Transactional
+    public void deleteById(Long id){
+        if(!categoryRepository.existsById(id)){
+            throw  new ExceptionIdNotFound("Resource not found");
+        }
+        try{
+            categoryRepository.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e){
+            throw new DatabaseException("Integrity violation");
+        }
+    }
+
 }
