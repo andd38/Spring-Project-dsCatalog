@@ -2,6 +2,7 @@ package com.project_Spring_treino.dsCatalog.Resources;
 
 import com.project_Spring_treino.dsCatalog.Entities.Category;
 import com.project_Spring_treino.dsCatalog.Services.CategoryService;
+import com.project_Spring_treino.dsCatalog.dto.CategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +18,8 @@ public class CategoryResources {
     @Autowired
     private CategoryService categoryService;
     @GetMapping
-        public ResponseEntity<List<Category>> findAll(){
-            List<Category> list = categoryService.findAll();
+        public ResponseEntity<List<CategoryDTO>> findAll(){
+            List<CategoryDTO> list = categoryService.findAll();
             return ResponseEntity.ok().body(list);
     }
 
