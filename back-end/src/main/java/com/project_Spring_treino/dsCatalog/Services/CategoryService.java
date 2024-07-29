@@ -5,6 +5,7 @@ import com.project_Spring_treino.dsCatalog.Repositories.CategoryRepository;
 import com.project_Spring_treino.dsCatalog.Services.exception.ExceptionIdNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class CategoryService {
     public Category findById(Long id){
         return categoryRepository.findById(id).orElseThrow(()->new ExceptionIdNotFound("id not found"));
     }
+    @Transactional(readOnly = true)
     public List<Category> findAll(){
         return categoryRepository.findAll();
     }
