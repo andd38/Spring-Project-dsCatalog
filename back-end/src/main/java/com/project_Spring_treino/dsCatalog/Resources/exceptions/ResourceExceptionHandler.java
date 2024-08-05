@@ -16,6 +16,7 @@ import java.time.Instant;
 public class ResourceExceptionHandler {
     @ExceptionHandler(ExceptionIdNotFound.class)
     public ResponseEntity<StandardError> entityNotFound (ExceptionIdNotFound e, HttpServletRequest request){
+        HttpStatus status =  HttpStatus.NOT_FOUND;
         StandardError err = new StandardError();
         err.setTimestamp(Instant.now());
         err.setStatus(HttpStatus.NOT_FOUND.value());
